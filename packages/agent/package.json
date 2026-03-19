@@ -1,5 +1,6 @@
 {
-  "name": "@repro/agent", "version": "0.0.1",
+  "name": "@repro/agent",
+  "version": "0.0.1",
   "dependencies": {
     "ai": "^5.0.156",
     "@ai-sdk/anthropic": "^2",
@@ -9,6 +10,7 @@
     "hono": "^4",
     "@sentry/deno": "^9",
     "jose": "^6",
-    "xstate": "^5"
+    "xstate": "^5",
+    "snowflake-sdk": "^2.0.4"
   }
 }

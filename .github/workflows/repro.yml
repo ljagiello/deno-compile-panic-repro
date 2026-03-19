@@ -14,14 +14,21 @@ jobs:
           deno-version: ${{ matrix.deno }}
       - run: sudo apt-get install -y libsqlite3-0
       - run: deno install
-      - name: Compile
-        run: DENO_SQLITE_PATH=/usr/lib/x86_64-linux-gnu/libsqlite3.so.0 deno compile --allow-all --no-check --output=myapp main.ts
+      - name: Compile (with larger stack to handle deep npm deps)
+        env:
+          DENO_SQLITE_PATH: /usr/lib/x86_64-linux-gnu/libsqlite3.so.0
+        run: |
+          ulimit -s 65536
+          deno compile --allow-all --no-check --output=myapp --v8-flags=--stack-size=16384000 main.ts
       - name: Run compiled binary
+        env:
+          DENO_SQLITE_PATH: /usr/lib/x86_64-linux-gnu/libsqlite3.so.0
         run: |
           set +e
-          timeout 10 env DENO_SQLITE_PATH=/usr/lib/x86_64-linux-gnu/libsqlite3.so.0 ./myapp 2>&1
+          timeout 10 ./myapp 2>&1
           EXIT=$?
           set -e
           if [ "$EXIT" = "124" ]; then echo "::error::HANG (timeout killed after 10s)"; exit 1; fi
           if [ "$EXIT" = "101" ]; then echo "::error::PANIC (exit 101)"; exit 1; fi
-          if [ "$EXIT" = "0" ]; then echo "OK"; fi
+          echo "exit: $EXIT"
+          if [ "$EXIT" != "0" ]; then exit 1; fi
