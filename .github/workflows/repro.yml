@@ -14,12 +14,13 @@ jobs:
           deno-version: ${{ matrix.deno }}
       - run: sudo apt-get install -y libsqlite3-0
       - run: deno install
-      - name: Compile (with larger stack to handle deep npm deps)
+      - name: Compile
         env:
           DENO_SQLITE_PATH: /usr/lib/x86_64-linux-gnu/libsqlite3.so.0
         run: |
-          ulimit -s 65536
-          deno compile --allow-all --no-check --output=myapp --v8-flags=--stack-size=16384000 main.ts
+          # Increase stack for deep npm CJS deps (snowflake-sdk)
+          ulimit -s unlimited
+          deno compile --allow-all --no-check --output=myapp main.ts
       - name: Run compiled binary
         env:
           DENO_SQLITE_PATH: /usr/lib/x86_64-linux-gnu/libsqlite3.so.0
@@ -29,6 +30,6 @@ jobs:
           EXIT=$?
           set -e
           if [ "$EXIT" = "124" ]; then echo "::error::HANG (timeout killed after 10s)"; exit 1; fi
-          if [ "$EXIT" = "101" ]; then echo "::error::PANIC (exit 101)"; exit 1; fi
+          if [ "$EXIT" = "101" ] || [ "$EXIT" = "134" ]; then echo "::error::PANIC/ABORT (exit $EXIT)"; exit 1; fi
           echo "exit: $EXIT"
           if [ "$EXIT" != "0" ]; then exit 1; fi
