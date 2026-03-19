@@ -12,7 +12,6 @@ import { createGoogleGenerativeAI } from "@ai-sdk/google";
 import * as Sentry from "@sentry/deno";
 import { Hono } from "hono";
 import { z } from "zod";
-import { Client } from "@hubspot/api-client";
 import { trace } from "@opentelemetry/api";
 import * as jose from "jose";
 import { createMachine } from "xstate";
