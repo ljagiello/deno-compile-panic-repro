@@ -1,3 +1,3 @@
 import { value as prev } from "./mod_306.ts";
-import { createOpenAI } from "@ai-sdk/openai";
+import { Hono } from "hono";
 export const value = 307 + prev;

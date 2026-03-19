@@ -1,3 +1,3 @@
 import { value as prev } from "./mod_295.ts";
-import { z } from "zod";
+import { createAnthropic } from "@ai-sdk/anthropic";
 export const value = 296 + prev;

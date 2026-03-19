@@ -1,3 +1,3 @@
 import { value as prev } from "./mod_206.ts";
-import snowflake from "snowflake-sdk";
+import { createOpenAI } from "@ai-sdk/openai";
 export const value = 207 + prev;

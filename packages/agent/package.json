@@ -1,29 +1,14 @@
 {
-  "name": "@repro/agent",
-  "version": "0.0.1",
+  "name": "@repro/agent", "version": "0.0.1",
   "dependencies": {
-    "snowflake-sdk": "^2.0.4",
     "ai": "^5.0.156",
     "@ai-sdk/anthropic": "^2",
     "@ai-sdk/openai": "^2",
     "@ai-sdk/google": "^2",
-    "@ai-sdk/groq": "^1",
-    "@ai-sdk/mcp": "^0.0.15",
-    "@sentry/deno": "^9",
-    "@modelcontextprotocol/sdk": "^1",
-    "@anthropic-ai/claude-agent-sdk": "^0.2",
-    "@opentelemetry/api": "^1",
-    "hono": "^4",
     "zod": "^3",
+    "hono": "^4",
+    "@sentry/deno": "^9",
     "jose": "^6",
-    "xstate": "^5",
-    "jszip": "^3",
-    "papaparse": "^5",
-    "proper-lockfile": "^4",
-    "@octokit/request": "^10",
-    "@xmldom/xmldom": "^0.8",
-    "cron-parser": "^5",
-    "nanoid": "^5",
-    "prom-client": "^15"
+    "xstate": "^5"
   }
 }

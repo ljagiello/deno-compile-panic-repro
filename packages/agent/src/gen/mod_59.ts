@@ -1,3 +1,3 @@
 import { value as prev } from "./mod_58.ts";
-import { createOpenAI } from "@ai-sdk/openai";
+import { createGoogleGenerativeAI } from "@ai-sdk/google";
 export const value = 59 + prev;

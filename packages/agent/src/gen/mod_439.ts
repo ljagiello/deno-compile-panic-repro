@@ -1,3 +1,3 @@
 import { value as prev } from "./mod_438.ts";
-import snowflake from "snowflake-sdk";
+import { Hono } from "hono";
 export const value = 439 + prev;
