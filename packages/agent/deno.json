@@ -1,0 +1,1 @@
+{ "name": "@repro/agent", "version": "0.0.1", "exports": { ".": "./src/mod.ts", "./gen": "./src/gen/mod_499.ts" } }

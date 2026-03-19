@@ -1,0 +1,23 @@
+name: Reproduce deno compile panic
+on: [push, workflow_dispatch]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        deno: ["2.7.4", "2.7.6"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: denoland/setup-deno@v2
+        with:
+          deno-version: ${{ matrix.deno }}
+      - run: sudo apt-get install -y libsqlite3-0
+      - run: deno install
+      - name: Compile
+        run: DENO_SQLITE_PATH=/usr/lib/x86_64-linux-gnu/libsqlite3.so.0 deno compile --allow-all --no-check --output=myapp main.ts
+      - name: Run compiled binary
+        run: |
+          timeout 10 DENO_SQLITE_PATH=/usr/lib/x86_64-linux-gnu/libsqlite3.so.0 ./myapp || EXIT=$?
+          if [ "$EXIT" = "124" ]; then echo "HANG (timeout)"; exit 1; fi
+          if [ "$EXIT" = "101" ]; then echo "PANIC"; exit 1; fi
+          echo "OK (exit $EXIT)"

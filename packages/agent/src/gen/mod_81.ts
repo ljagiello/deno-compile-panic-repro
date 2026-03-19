@@ -1,0 +1,3 @@
+import { value as prev } from "./mod_80.ts";
+import { Hono } from "hono";
+export const value = 81 + prev;
